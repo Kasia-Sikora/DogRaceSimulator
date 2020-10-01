@@ -1,0 +1,71 @@
+body {
+  background: url("../img/background.jpg") center center no-repeat fixed;
+  background-size: cover;
+}
+
+img, img[src*="0.png"], img[src*="1.png"] {
+  width: 10%;
+  position: relative;
+  left: 1px;
+}
+
+img[src*="1.png"] {
+  width: 12%;
+}
+
+img[src*="0.png"] {
+  width: 9%;
+}
+
+img[clsrcass=longDog] {
+  width: 13%;
+}
+
+button {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 12.3%;
+  height: 11%;
+}
+
+#submit {
+  position: relative;
+  width: 23%;
+  height: 40%;
+}
+
+#finishLine {
+  position: absolute;
+  height: 85%;
+  width: 1%;
+  right: 30px;
+  top: 0;
+  background-color: white;
+}
+
+#userName, #dogsToChoose, #cash, #bet {
+  position: absolute;
+  bottom: 0;
+  left: 13%;
+  width: 10%;
+  height: 11%;
+  background-color: white;
+  text-align: center;
+  line-height: 400%;
+}
+
+#bet {
+  left: 23%;
+}
+
+#cash {
+  left: 33%;
+}
+
+#dogsToChoose {
+  left: 43%;
+  width: 20%;
+}
+
+/*# sourceMappingURL=Main.css.map */
