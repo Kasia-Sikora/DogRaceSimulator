@@ -1,23 +1,21 @@
-import {dom} from "./view/dom.js";
-import {prepareForRace} from "./prepareForRace.js";
+import {Dom} from "./view/dom.js";
+import {PrepareForRace} from "./prepareForRace.js";
+import {Race} from "./race.js";
+import {Bet} from "./bets.js";
 
 
 function start() {
 
-    let dogsInRace = prepareForRace.generateDogs();
-    console.log(dogsInRace);
-    dom.displayDogs(dogsInRace);
-    let user = prepareForRace.createUser();
+    let prepareForRace = new PrepareForRace();
+    let bet = new Bet();
+    let race = new Race(prepareForRace, bet);
+    let dom = new Dom(prepareForRace, race);
+    bet.setDom(dom);
     let numberOfRounds = parseInt(prompt("Enter number of rounds You want to play: "));
-    dom.usersDogChoice(dogsInRace, user);
-    dom.createStartButton();
-    dom.viewUsername(user.name);
-    dom.viewBet(user.bet);
-    dom.viewCash(user.cash - user.bet);
 
-    console.log('First dog is: ' + dogsInRace[0].name +  ' and his speed is ' + dogsInRace[0].speed);
-    console.log('Second dog is: ' + dogsInRace[1].name +  ' and his speed is ' + dogsInRace[1].speed);
-    console.log('Third dog is: ' + dogsInRace[2].name +  ' and his speed is ' + dogsInRace[2].speed);
+    console.log('First dog is: ' + prepareForRace.dogsInRace[0].name + ' and his speed is ' + prepareForRace.dogsInRace[0].speed);
+    console.log('Second dog is: ' + prepareForRace.dogsInRace[1].name + ' and his speed is ' + prepareForRace.dogsInRace[1].speed);
+    console.log('Third dog is: ' + prepareForRace.dogsInRace[2].name + ' and his speed is ' + prepareForRace.dogsInRace[2].speed);
 }
 
 start();

@@ -1,9 +1,28 @@
-import {User} from "./model/user.js";
+export class Bet {
+    dom;
 
-export let bet = {
+    checkIfUserWin(user, dog) {
+        if(user.getBettingDog() === dog){
+            alert("You win!!!")
+            this.userWins(user);
+        }else{
+            alert("You lose!!!")
+            this.userLose(user);
+        }
+        this.dom.updateCashView();
+    }
 
-    checkIfUserWin(color) {
-        User.getBettingDog();
-        console.log(color);
+    userWins(user) {
+        let wonCash = user.bet * 2;
+        user.win(wonCash);
+
+    }
+
+    userLose(user) {
+        user.lose();
+    }
+
+    setDom(dom) {
+        this.dom = dom;
     }
 }

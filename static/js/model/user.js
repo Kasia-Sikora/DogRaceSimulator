@@ -22,11 +22,13 @@ export class User {
         return `${this.cash} $`
     }
 
-    win(){
-
+    win(wonCash){
+        this.cash += wonCash;
+        this.bet = 0;
     }
 
     lose(){
-
+        this.cash -= this.bet;
+        this.bet = 0;
     }
 }

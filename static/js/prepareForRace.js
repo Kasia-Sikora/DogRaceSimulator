@@ -5,17 +5,23 @@ import {Greyhound} from "./model/greyhound.js";
 import {IbizanHound} from "./model/ibizanHound.js";
 import {Whippet} from "./model/whippet.js";
 import {Saluki} from "./model/saluki.js";
-import {dom} from "./view/dom.js";
 
-export let prepareForRace = {
+export class PrepareForRace {
 
-    dogsInRace: [],
+    dogsInRace = [];
+    user;
 
-    createUser: function () {
+    constructor() {
+        this.dogsInRace = this.generateDogs();
+        this.user = this.createUser();
+    }
+
+    createUser() {
         let userName = prompt("Enter Your name: ");
-        let bet = parseInt(prompt("Enter Your bet: "));
-        return new User(userName, bet);
-    },
+        let userBet = parseInt(prompt("Enter Your bet: "));
+        return new User(userName, userBet);
+    }
+
     generateDogs() {
         let numberOfDogs = 3;
         let colors = ['red', 'green', 'blue'];
@@ -23,14 +29,13 @@ export let prepareForRace = {
         let arrayOfDogs = [];
         while (numberOfDogs > 0) {
             let dog = this.addDogObject(Math.floor(Math.random() * Math.floor(6)));
-            dog.setDogColor(colors[numberOfDogs-1]);
-            dog.setPicture(dogsPictures[numberOfDogs-1])
+            dog.setDogColor(colors[numberOfDogs - 1]);
+            dog.setPicture(dogsPictures[numberOfDogs - 1])
             arrayOfDogs.push(dog);
             numberOfDogs--;
         }
-        this.dogsInRace = arrayOfDogs;
         return arrayOfDogs;
-    },
+    }
 
     addDogObject(number) {
         switch (number) {
@@ -47,5 +52,5 @@ export let prepareForRace = {
             case 5:
                 return new Whippet();
         }
-    },
+    }
 }

@@ -1,8 +1,5 @@
-import {race} from "../race.js";
-import {bet} from "../bets.js";
-import {dom} from "../view/dom.js";
-
 export class Dog {
+
     constructor(dogObject) {
         this.name = dogObject.name;
         this.speed = this.setSpeed((dogObject.speed - 10), dogObject.speed)
@@ -29,7 +26,7 @@ export class Dog {
         this.picture = picture;
     }
 
-    dogRun() {
+    dogRun(race) {
         let finish = document.getElementById('finishLine');
         let dog = document.getElementById('dog ' + this.color);
         if (dog.getBoundingClientRect().left <= finish.getBoundingClientRect().left - (finish.getBoundingClientRect().left / 11)) {
@@ -38,8 +35,9 @@ export class Dog {
             dog.style.marginLeft = +move + this.speed + 'px';
         } else {
             alert(this.color + ' wins');
+            race.setWinnerDog(this);
             race.clearIntervals(this.color);
-            bet.checkIfUserWin(this.color);
+            this.setDogOnStartPosition()
         }
     }
 
@@ -54,5 +52,10 @@ export class Dog {
             dog.src = this.picture.replace("1", "2")
             this.picture = this.picture.replace("1", "2");
         }
+    }
+
+    setDogOnStartPosition(){
+        let dog = document.getElementById('dog ' + this.color);
+        console.log(dog);
     }
 }

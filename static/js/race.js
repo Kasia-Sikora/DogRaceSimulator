@@ -1,23 +1,31 @@
-import {prepareForRace} from "./prepareForRace.js";
+export class Race {
 
-export let race = {
+    intervals = [];
+    winnerDog;
 
-    intervals: [],
+    constructor(prepareForRace, bet) {
+        this.user = prepareForRace.user;
+        this.bet = bet;
+    }
 
-    startRace() {
-        for (let dog of prepareForRace.dogsInRace) {
+    startRace(dogsInRace) {
+        for (let dog of dogsInRace) {
             let doggy = document.getElementById('dog ' + dog.color);
             doggy.src = dog.picture.replace("0", "1");
             let run = () => {
-                dog.dogRun();
+                dog.dogRun(this);
             }
             let interval = setInterval(run, 200);
             this.intervals.push(interval)
         }
-    },
-
-    clearIntervals(){
-        this.intervals.forEach(clearInterval);
     }
 
+    clearIntervals() {
+        this.intervals.forEach(clearInterval);
+        this.bet.checkIfUserWin(this.user, this.winnerDog)
+    }
+
+    setWinnerDog(dog){
+        this.winnerDog = dog;
+    }
 }

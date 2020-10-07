@@ -1,53 +1,70 @@
-import {race} from "../race.js";
+export class Dom {
 
+    constructor(prepareForRace, race) {
+        this.race = race;
+        this.prepareForRace = prepareForRace;
+        this.user = prepareForRace.user;
+        this.init();
+    }
 
-export let dom = {
+    init() {
+        this.displayDogs();
+        this.usersDogChoice();
+        this.createStartButton();
+        this.viewUsername();
+        this.viewBet();
+        this.viewCash();
+    }
 
-    body: document.getElementsByTagName('body')[0],
+    body = document.getElementsByTagName('body')[0];
 
-    createStartButton: function () {
+    createStartButton() {
         let button = document.createElement('button');
         button.textContent = 'START';
         button.addEventListener('click', () => {
-            race.startRace();
+            if (this.user.bettingDog === undefined) {
+                alert('You have to bet first')
+            } else {
+                this.race.startRace(this.prepareForRace.dogsInRace);
+            }
         })
         this.body.appendChild(button);
-    },
+    }
 
-    viewUsername: function (userName) {
+    viewUsername() {
         let usernameView = document.createElement('div');
         usernameView.setAttribute('id', 'userName');
-        usernameView.textContent = userName;
+        usernameView.textContent = this.user.name;
         this.body.appendChild(usernameView);
-    },
+    }
 
-    viewCash: function (cash) {
+    viewCash() {
         let cashView = document.createElement('div');
         cashView.setAttribute('id', 'cash');
-        cashView.textContent = 'Total cash: ' + cash + ' $';
+        cashView.textContent = 'Total cash: ' + (this.user.cash - this.user.bet) + ' $';
         this.body.appendChild(cashView);
-    },
+    }
 
-    viewBet: function (bet) {
+    viewBet() {
         let betView = document.createElement('div');
         betView.setAttribute('id', 'bet');
-        betView.textContent = 'Your bet: ' + bet + ' $';
+        betView.textContent = 'Your bet: ' + this.user.bet + ' $';
         this.body.appendChild(betView);
-    },
+    }
 
-    usersDogChoice: function (dogInRace, user) {
-        console.log('dogs in main ' + dogInRace);
+    usersDogChoice() {
+        console.log('dogs in main ' + this.prepareForRace.dogsInRace);
         let box = document.createElement('div');
         box.setAttribute('id', 'dogsToChoose');
-        for (let i = 0; i < dogInRace.length; i++) {
+        for (let i = 0; i < this.prepareForRace.dogsInRace.length; i++) {
             let input = document.createElement('input');
             input.type = 'radio';
-            input.id = dogInRace[i].color;
+            input.id = this.prepareForRace.dogsInRace[i].color;
             input.name = 'dog';
-            input.value = dogInRace[i].name;
+            input.value = this.prepareForRace.dogsInRace[i].name;
             let label = document.createElement('label');
-            label.setAttribute('for', dogInRace[i].color)
-            label.innerText = dogInRace[i].color;
+            label.setAttribute('for', this.prepareForRace.dogsInRace[i].color)
+            label.innerText = this.prepareForRace.dogsInRace[i].color;
             box.appendChild(input);
             box.appendChild(label);
         }
@@ -55,35 +72,43 @@ export let dom = {
         button.type = 'button';
         button.id = 'submit';
         button.textContent = 'Submit';
-        button.addEventListener('click', ()=> {
-            this.submitForm(dogInRace, user);
+        button.addEventListener('click', () => {
+            this.submitForm(this.prepareForRace.dogsInRace, this.user);
         })
         box.appendChild(button)
         this.body.appendChild(box);
-    },
+    }
 
-    submitForm(dogInRace, user) {
+    submitForm() {
         let dog = document.getElementsByName('dog');
-        for(let i = 0; i < dog.length; i++) {
-            if(dog[i].checked){
+        for (let i = 0; i < dog.length; i++) {
+            if (dog[i].checked) {
                 dog = dog[i].id;
-                for(let doggy of dogInRace){
-                    if (doggy.color === dog){
-                        user.setBettingDog(doggy)
+                for (let doggy of this.prepareForRace.dogsInRace) {
+                    if (doggy.color === dog) {
+                        this.user.setBettingDog(doggy)
                     }
                 }
             }
         }
-    },
-    displayDogs(dogsInRace) {
-        for(let i = 0; i < dogsInRace.length; i++){
+    }
+
+    displayDogs() {
+        for (let i = 0; i < this.prepareForRace.dogsInRace.length; i++) {
             let image = document.createElement('img');
-            image.setAttribute('src', dogsInRace[i].picture);
-            image.setAttribute('alt', dogsInRace[i].color);
-            image.setAttribute('id', 'dog ' + dogsInRace[i].color);
+            image.setAttribute('src', this.prepareForRace.dogsInRace[i].picture);
+            image.setAttribute('alt', this.prepareForRace.dogsInRace[i].color);
+            image.setAttribute('id', 'dog ' + this.prepareForRace.dogsInRace[i].color);
             let br = document.createElement('br');
             this.body.appendChild(image);
             this.body.appendChild(br);
         }
-    },
+    }
+
+    updateCashView() {
+        let cashView = document.getElementById('cash');
+        cashView.textContent = 'Total cash: ' + this.user.cash + ' $';
+        let betView = document.getElementById('bet');
+        betView.textContent = 'Your bet: ' + this.user.bet + ' $';
+    }
 }
