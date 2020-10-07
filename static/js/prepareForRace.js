@@ -18,7 +18,7 @@ export class PrepareForRace {
 
     createUser() {
         let userName = prompt("Enter Your name: ");
-        let userBet = parseInt(prompt("Enter Your bet: "));
+        let userBet = parseInt(prompt("Enter Your bet: (Max 200)"));
         return new User(userName, userBet);
     }
 
@@ -52,5 +52,10 @@ export class PrepareForRace {
             case 5:
                 return new Whippet();
         }
+    }
+
+    startNewRound(){
+        let userBet = parseInt(prompt("Enter Your bet: (Max " + this.user.cash + ")"));
+        this.user.setBet(userBet);
     }
 }

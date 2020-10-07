@@ -24,8 +24,10 @@ export class Dom {
         button.addEventListener('click', () => {
             if (this.user.bettingDog === undefined) {
                 alert('You have to bet first')
+            } else if (this.user.cash > 0) {
+                this.race.startRace();
             } else {
-                this.race.startRace(this.prepareForRace.dogsInRace);
+                alert("You don't have any money!")
             }
         })
         this.body.appendChild(button);
@@ -53,7 +55,6 @@ export class Dom {
     }
 
     usersDogChoice() {
-        console.log('dogs in main ' + this.prepareForRace.dogsInRace);
         let box = document.createElement('div');
         box.setAttribute('id', 'dogsToChoose');
         for (let i = 0; i < this.prepareForRace.dogsInRace.length; i++) {

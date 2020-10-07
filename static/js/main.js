@@ -11,7 +11,6 @@ function start() {
     let race = new Race(prepareForRace, bet);
     let dom = new Dom(prepareForRace, race);
     bet.setDom(dom);
-    let numberOfRounds = parseInt(prompt("Enter number of rounds You want to play: "));
 
     console.log('First dog is: ' + prepareForRace.dogsInRace[0].name + ' and his speed is ' + prepareForRace.dogsInRace[0].speed);
     console.log('Second dog is: ' + prepareForRace.dogsInRace[1].name + ' and his speed is ' + prepareForRace.dogsInRace[1].speed);

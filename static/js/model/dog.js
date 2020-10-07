@@ -36,7 +36,7 @@ export class Dog {
         } else {
             alert(this.color + ' wins');
             race.setWinnerDog(this);
-            race.clearIntervals(this.color);
+            race.finishRound(this.color);
             this.setDogOnStartPosition()
         }
     }
@@ -54,8 +54,15 @@ export class Dog {
         }
     }
 
-    setDogOnStartPosition(){
+    setDogOnStartPosition() {
         let dog = document.getElementById('dog ' + this.color);
-        console.log(dog);
+        if (this.picture[this.picture.length - 5] === '1') {
+            dog.src = this.picture.replace("1", "0");
+            this.picture = this.picture.replace("1", "0");
+        } else if (this.picture[this.picture.length - 5] === '2') {
+            dog.src = this.picture.replace("2", "0")
+            this.picture = this.picture.replace("2", "0");
+        }
+        dog.style.marginLeft = 0 + 'px';
     }
 }

@@ -6,10 +6,12 @@ export class Race {
     constructor(prepareForRace, bet) {
         this.user = prepareForRace.user;
         this.bet = bet;
+        this.dogsInRace = prepareForRace.dogsInRace;
+        this.prepareForRace = prepareForRace;
     }
 
-    startRace(dogsInRace) {
-        for (let dog of dogsInRace) {
+    startRace() {
+        for (let dog of this.dogsInRace) {
             let doggy = document.getElementById('dog ' + dog.color);
             doggy.src = dog.picture.replace("0", "1");
             let run = () => {
@@ -20,12 +22,20 @@ export class Race {
         }
     }
 
-    clearIntervals() {
+    finishRound() {
         this.intervals.forEach(clearInterval);
-        this.bet.checkIfUserWin(this.user, this.winnerDog)
+        this.bet.checkIfUserWin(this.user, this.winnerDog);
+        this.setDogsOnStart();
+        this.prepareForRace.startNewRound();
     }
 
     setWinnerDog(dog){
         this.winnerDog = dog;
+    }
+
+    setDogsOnStart() {
+        for(let dog of this.dogsInRace){
+            dog.setDogOnStartPosition();
+        }
     }
 }
